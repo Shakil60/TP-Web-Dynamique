@@ -54,4 +54,13 @@ a {
   margin: 10px;
   width: 250px;
   text-align: center;
+  flex-wrap: nowrap;
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  gap: 20px;
 }
