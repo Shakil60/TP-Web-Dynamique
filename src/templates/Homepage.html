@@ -25,6 +25,13 @@
   </header>
   <main>
     <h1>LES PRODUITS</h1>
+    {{range .}}
+    <div class="product-card">
+      <h2>{{.Name}}</h2>
+      <p>Price: ${{.Price}}</p>
+      <a href="#"><img src="{{.Image}}" alt="{{.Name}}" width="200" height="auto"></a>
+    </div>
+    {{end}}
   </main>   
 </body>
 </html>
