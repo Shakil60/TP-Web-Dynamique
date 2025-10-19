@@ -12,7 +12,7 @@
     <nav>
       <ul class="leftheader">
         <li><a href="/temp/Homepage">Home</a></li>
-        <li><a href="/temp/AddProduct">Add</a></li>
+        <li><a href="/temp/Add">Add</a></li>
       </ul>
     </nav>
     <a id="logo" href="#"><img src="/static/img/logo/Logo.png" width="90" height="60" alt="Logo"></a>
@@ -21,12 +21,12 @@
   <main class="add-container">
     <div class="add-card">
       <h1>Ajouter un produit</h1>
-      <form action="/add" method="POST" class="add-form">
+      <form action="/temp/Add" method="POST" class="add-form">
         <label for="name">Nom du produit :</label>
         <input type="text" id="name" name="name" placeholder="Ex : Palace Pull Marine" required>
 
         <label for="price">Prix (€) :</label>
-        <input type="number" id="price" name="price" placeholder="Ex : 138" required min="0">
+        <input type="number" id="price" name="price" placeholder="Ex : 138" required min="0" step="0.01">
 
         <button type="submit" class="button">Ajouter</button>
       </form>

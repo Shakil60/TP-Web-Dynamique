@@ -1,4 +1,4 @@
-package main 
+package main
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 )
 
 func main() {
@@ -39,7 +40,7 @@ func main() {
 	http.HandleFunc("/temp/Homepage", func(w http.ResponseWriter, r *http.Request) {
 		listTemplate.ExecuteTemplate(w, "Homepage", products)
 	})
-	
+
 	http.HandleFunc("/temp/Product", func(w http.ResponseWriter, r *http.Request) {
 		idStr := r.URL.Query().Get("id")
 		if idStr == "" {
@@ -69,6 +70,43 @@ func main() {
 		listTemplate.ExecuteTemplate(w, "Product", selected)
 	})
 
+	http.HandleFunc("/temp/Add", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodGet {
+			listTemplate.ExecuteTemplate(w, "AddProduct", nil)
+			return
+		}
+
+		if r.Method == http.MethodPost {
+			name := r.FormValue("name")
+			priceStr := r.FormValue("price")
+
+			if name == "" || priceStr == "" {
+				http.Error(w, "Nom et prix sont requis", http.StatusBadRequest)
+				return
+			}
+
+			price, err := strconv.ParseFloat(priceStr, 64)
+			if err != nil {
+				http.Error(w, "Prix invalide", http.StatusBadRequest)
+				return
+			}
+
+			name = strings.TrimSpace(strings.ToUpper(name))
+
+			newID := len(products) + 1
+			newProduct := Product{
+				ID:    newID,
+				Name:  name,
+				Price: price,
+				Image: "/static/img/products/sweatcap5.webp",
+			}
+
+			products = append(products, newProduct)
+
+			http.Redirect(w, r, "/temp/Homepage", http.StatusSeeOther)
+			return
+		}
+	})
 
 	http.ListenAndServe("localhost:8000", nil)
 }
