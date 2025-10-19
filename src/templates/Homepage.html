@@ -8,28 +8,26 @@
     <title>Home page</title>
 </head>
 <body>
-    <header class="main-header">
+  <header class="main-header">
     <nav>
       <ul class="leftheader">
-        <li><a href="#Home">Home</a></li>
-        <li><a href="#Add">Add</a></li>
+        <li><a href="/temp/Homepage">Home</a></li>
+        <li><a href="/temp/AddProduct">Add</a></li>
       </ul>
     </nav>
     <a id="logo" href="#"><img src="/static/img/logo/Logo.png" width="90" height="60" alt="Logo"></a>
-    <nav>
-      <ul class="rightheader">
-        <li><a href="#Login">Login</a></li>
-        <li><a href="#Signup">Signup</a></li>
-      </ul>
-    </nav>
   </header>
+
+  <h1>LES PRODUITS</h1>
+
   <main>
-    <h1>LES PRODUITS</h1>
     {{range .}}
     <div class="product-card">
       <h2>{{.Name}}</h2>
       <p>Prix: {{.Price}} €</p>
-      <a href="#"><img src="{{.Image}}" alt="{{.Name}}" width="200" height="auto"></a>
+      <a href="#"><img src="{{.Image}}" alt="{{.Name}}" width="200"></a>
+      <br>
+      <a class="button" href="/temp/Product?id={{.ID}}">Voir le produit</a>
     </div>
     {{end}}
   </main>   

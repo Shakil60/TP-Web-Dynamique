@@ -27,23 +27,22 @@ a {
 .main-header {
   background-color: rgb(56, 54, 54);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 10px 20px;
   width: 100%;
   position: static;
 }
 
+nav {
+  position: absolute;
+  left: 20px; 
+}
+
 .leftheader {
   display: flex;
   align-items: center;
   padding: 10px;
-  gap: 10px;
-}
-
-.rightheader {
-  display: flex;
-  align-items: center;
   gap: 10px;
 }
 
@@ -63,4 +62,73 @@ main {
   justify-content: center;
   padding: 20px;
   gap: 20px;
+}
+
+.button {
+  display: inline-block;
+  color: white;
+  background-color: red;
+  padding: 8px 15px;
+  border-radius: 5px;
+  margin-top: 10px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: darkred;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.product-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background-color: #f8f8f8;
+}
+
+.product-card-large {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  max-width: 850px;
+  gap: 40px;
+}
+
+.product-details {
+  flex: 1;
+}
+
+.product-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.product-sizes {
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.product-description {
+  color: #444;
+  font-size: 14px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.product-price {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }

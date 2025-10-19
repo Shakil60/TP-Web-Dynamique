@@ -1,0 +1,42 @@
+{{define "Product"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Name}}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <header class="main-header">
+    <nav>
+      <ul class="leftheader">
+        <li><a href="/temp/Homepage">Home</a></li>
+        <li><a href="/temp/AddProduct">Add</a></li>
+      </ul>
+    </nav>
+    <a id="logo" href="#"><img src="/static/img/logo/Logo.png" width="90" height="60" alt="Logo"></a>
+  </header>
+
+   <main class="product-container">
+
+    <div class="product-card-large">
+      <img src="{{.Image}}" alt="{{.Name}}" width="300" height="auto">
+
+      <div class="product-details">
+        <h2 class="product-title">{{.Name}}</h2>
+        <p class="product-sizes">Tailles disponibles : S | XS | M</p>
+        <p class="product-description">
+          Confectionné dans un tissu doux et confortable pour l’hiver, le pull est un incontournable
+          pour montre que tu représentes la cité londonienne.
+        </p>
+        <p class="product-price">{{.Price}}€</p>
+        <a href="#" class="button">Ajouter au panier</a>
+      </div>
+
+    </div>
+
+  </main>
+</body>
+</html>
+{{end}}
