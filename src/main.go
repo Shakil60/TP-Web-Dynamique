@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"net/http"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -70,43 +71,56 @@ func main() {
 		listTemplate.ExecuteTemplate(w, "Product", selected)
 	})
 
-	http.HandleFunc("/temp/Add", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method == http.MethodGet {
-			listTemplate.ExecuteTemplate(w, "AddProduct", nil)
-			return
-		}
+http.HandleFunc("/temp/Add", func(w http.ResponseWriter, r *http.Request) {
+    if r.Method == http.MethodGet {
+        listTemplate.ExecuteTemplate(w, "AddProduct", nil)
+        return
+    }
+    http.Error(w, "Méthode non autorisée", http.StatusMethodNotAllowed)
+})
 
-		if r.Method == http.MethodPost {
-			name := r.FormValue("name")
-			priceStr := r.FormValue("price")
+http.HandleFunc("/temp/AddProduct", func(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Méthode non autorisée", http.StatusMethodNotAllowed)
+		return
+	}
 
-			if name == "" || priceStr == "" {
-				http.Error(w, "Nom et prix sont requis", http.StatusBadRequest)
-				return
-			}
+	name := r.FormValue("name")
+	priceStr := r.FormValue("price")
 
-			price, err := strconv.ParseFloat(priceStr, 64)
-			if err != nil {
-				http.Error(w, "Prix invalide", http.StatusBadRequest)
-				return
-			}
+	if name == "" || priceStr == "" {
+		http.Error(w, "Nom et prix sont requis", http.StatusBadRequest)
+		return
+	}
 
-			name = strings.TrimSpace(strings.ToUpper(name))
+	nameRegex := regexp.MustCompile(`^[A-Z0-9\s\-:/]+$`)
+	name = strings.TrimSpace(strings.ToUpper(name))
+	if !nameRegex.MatchString(name) {
+		http.Error(w, "Nom du produit invalide", http.StatusBadRequest)
+		return
+	}
 
-			newID := len(products) + 1
-			newProduct := Product{
-				ID:    newID,
-				Name:  name,
-				Price: price,
-				Image: "/static/img/products/sweatcap5.webp",
-			}
+	priceRegex := regexp.MustCompile(`^\d+(\.\d{1,2})?$`)
+	if !priceRegex.MatchString(priceStr) {
+		http.Error(w, "Prix invalide", http.StatusBadRequest)
+		return
+	}
 
-			products = append(products, newProduct)
+	price, _ := strconv.ParseFloat(priceStr, 64)
 
-			http.Redirect(w, r, "/temp/Homepage", http.StatusSeeOther)
-			return
-		}
-	})
+	newID := len(products) + 1
+	newProduct := Product{
+		ID:    newID,
+		Name:  name,
+		Price: price,
+		Image: "/static/img/products/sweatcap5.webp",
+	}
+
+	products = append(products, newProduct)
+
+	http.Redirect(w, r, fmt.Sprintf("/temp/Product?id=%d", newID), http.StatusSeeOther)
+})
+
 
 	http.ListenAndServe("localhost:8000", nil)
 }
